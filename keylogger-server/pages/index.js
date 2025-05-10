@@ -10,7 +10,7 @@ export default function Home() {
         const json = await res.json();
         setKeys(json);
       } catch (err) {
-        console.error("Failed to fetch keys:", err);
+        console.error("Fetch error:", err);
       }
     };
 
@@ -22,15 +22,14 @@ export default function Home() {
   return (
     <div style={{
       backgroundColor: "white",
-      minHeight: "100vh",
+      height: "100vh",
       padding: "2rem",
-      fontFamily: "monospace",
-      color: "black"
+      fontFamily: "monospace"
     }}>
-      <h1>Live Keystroke Viewer</h1>
+      <h1>Live Key Logs</h1>
       <ul>
-        {keys.map((key, index) => (
-          <li key={index}>Keycode: {key}</li>
+        {keys.map((k, i) => (
+          <li key={i}>Keycode: {k}</li>
         ))}
       </ul>
     </div>
