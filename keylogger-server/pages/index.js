@@ -6,7 +6,7 @@ export default function Home() {
   useEffect(() => {
     const fetchKeys = async () => {
       try {
-        const res = await fetch("https://keylogger-server-2ptkbw8gh-harimks-projects.vercel.app//api/data");
+        const res = await fetch("https://keylogger-server-harimks-projects.vercel.app/api/data");
         const json = await res.json();
         setKeys(json);
       } catch (err) {
