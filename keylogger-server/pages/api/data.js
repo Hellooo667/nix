@@ -1,37 +1,34 @@
 let keyLog = [];
 
-export default function handler(req, res) {
-  // Enable CORS
+export default async function handler(req, res) {
+  // Step 1: Handle CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Handle preflight requests
   if (req.method === "OPTIONS") {
-    return res.status(200).end();
+    return res.status(200).end(); // CORS preflight
   }
 
-  // Handle POST to log keycode
+  // Step 2: Handle POST request to store keycode
   if (req.method === "POST") {
     const { keycode } = req.body;
 
     if (typeof keycode === "number") {
       keyLog.push(keycode);
-      if (keyLog.length > 100) keyLog.shift(); // Keep last 100 entries
+      if (keyLog.length > 100) keyLog.shift(); // limit to last 100
       return res.status(200).json({ success: true });
     }
 
     return res.status(400).json({ error: "Invalid keycode" });
   }
 
-  // Handle GET to return keylog
+  // Step 3: Handle GET request to retrieve keycodes
   if (req.method === "GET") {
     return res.status(200).json(keyLog);
   }
 
-  // Method not allowed
+  // Step 4: Handle other methods
   res.setHeader("Allow", ["GET", "POST", "OPTIONS"]);
-  res.status(405).end(`Method ${req.method} Not Allowed`);
+  return res.status(405).end(`Method ${req.method} Not Allowed`);
 }
-
-
