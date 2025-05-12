@@ -1,4 +1,3 @@
-// pages/view.js
 import { useEffect, useState } from 'react';
 
 export default function View() {
@@ -9,11 +8,10 @@ export default function View() {
       try {
         const res = await fetch("/api/data");
         const json = await res.json();
-        console.log("API response:", json);
         if (Array.isArray(json)) {
           setData(json);
         } else {
-          console.error("API did not return an array:", json);
+          console.error("Unexpected API response:", json);
         }
       } catch (err) {
         console.error("Fetch error:", err);
@@ -25,20 +23,27 @@ export default function View() {
     return () => clearInterval(interval);
   }, []);
 
+  const decodeKey = (code) => {
+    try {
+      return String.fromCharCode(code);
+    } catch {
+      return '?';
+    }
+  };
+
   return (
     <div style={{
       backgroundColor: "#fff",
       minHeight: "100vh",
       padding: "2rem",
-      color: "#000",
-      fontFamily: "monospace"
+      color: "#111",
+      fontFamily: "monospace",
+      fontSize: "1.5rem"
     }}>
-      <h1>Logged Keycodes</h1>
-      <ul>
-        {data.map((code, index) => (
-          <li key={index}>Keycode: {code}</li>
-        ))}
-      </ul>
+      <h1>Logged Keys</h1>
+      <div>
+        {data.map((code, index) => decodeKey(code)).join('')}
+      </div>
     </div>
   );
 }
