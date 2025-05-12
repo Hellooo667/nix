@@ -24,11 +24,27 @@ export default function View() {
   }, []);
 
   const decodeKey = (code) => {
-    if (code === 13) return "[Enter]";
-    if (code === 32) return " ";
-    if (code === 8) return "[Backspace]";
-    if (code < 32 || code > 126) return `[${code}]`;
-    return String.fromCharCode(code);
+    // Special keys mapping
+    const specialKeys = {
+      8: '⌫',  // Backspace
+      9: '⇥',  // Tab
+      13: '⏎', // Enter
+      16: '⇧', // Shift
+      17: '⌃', // Ctrl
+      18: '⌥', // Alt
+      20: '⇪', // Caps Lock
+      27: '⎋', // Escape
+      32: '␣', // Space
+      37: '←', // Arrow Left
+      38: '↑', // Arrow Up
+      39: '→', // Arrow Right
+      40: '↓', // Arrow Down
+      46: '⌦', // Delete
+      91: '⌘', // Command (Left)
+      93: '⌘', // Command (Right)
+    };
+
+    return specialKeys[code] || String.fromCharCode(code);
   };
 
   return (
@@ -36,12 +52,20 @@ export default function View() {
       backgroundColor: "#fff",
       minHeight: "100vh",
       padding: "2rem",
-      color: "#111",
+      color: "#000", // Darker text
       fontFamily: "monospace",
-      fontSize: "1.5rem"
+      fontSize: "2rem", // Increased font size
+      whiteSpace: "nowrap", // Prevent line breaks
+      overflowX: "auto" // Add horizontal scroll if needed
     }}>
-      <h1>Logged Keys</h1>
-      <div>
+      <h1 style={{ color: "#000", fontSize: "2.5rem" }}>Logged Keys</h1>
+      <div style={{ 
+        backgroundColor: "#f5f5f5",
+        padding: "1rem",
+        borderRadius: "4px",
+        minHeight: "3rem",
+        border: "1px solid #ddd"
+      }}>
         {data.map((code, index) => (
           <span key={index}>{decodeKey(code)}</span>
         ))}
