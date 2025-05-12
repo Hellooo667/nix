@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 
-
-
 export default function Home() {
 
   const [keys, setKeys] = useState([]);
-
-
 
   useEffect(() => {
 
@@ -28,8 +24,6 @@ export default function Home() {
 
     };
 
-
-
     fetchKeys();
 
     const interval = setInterval(fetchKeys, 1000);
@@ -38,13 +32,11 @@ export default function Home() {
 
   }, []);
 
-
-
   return (
 
     <div style={{
 
-      backgroundColor: "white",
+      backgroundColor: "yellow",
 
       height: "100vh",
 
@@ -53,10 +45,6 @@ export default function Home() {
       fontFamily: "monospace"
 
     }}>
-
-
-      <b>
-
       <h1>Live Key Logs</h1>
 
       <ul>
@@ -71,10 +59,6 @@ export default function Home() {
 
 
     </div>
-
-
-        </b></div>
-
   );
 
 }
