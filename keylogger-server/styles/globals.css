@@ -1,8 +1,8 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --keybox-bg: #ffffff;
-  --keybox-border: #ffffff;
+  --keybox-bg: #f8f8f8; /* Slightly different background for keybox */
+  --keybox-border: #e0e0e0; /* Subtle border for keybox */
   --font-family: 'Courier New', monospace;
 }
 
@@ -10,8 +10,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    --keybox-bg: #0a0a0a;
-    --keybox-border: #0a0a0a;
+    --keybox-bg: #1a1a1a; /* Darker background for keybox in dark mode */
+    --keybox-border: #333333; /* Darker border for keybox in dark mode */
   }
 
   html {
@@ -31,15 +31,16 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-family);
-  font-size: 1.5rem; /* reduced from 2rem */
+  font-size: 1.2rem; /* Reduced base font size */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding: 2rem;
+  padding: 1rem; /* Adjusted padding */
 }
 
 h1 {
-  font-size: 2rem; /* reduced from 2.5rem */
-  margin-bottom: 1rem;
+  color: var(--foreground); /* Ensure heading color respects theme */
+  font-size: 1.6rem; /* Reduced heading size */
+  margin-bottom: 0.8rem; /* Adjusted margin */
   font-weight: normal;
 }
 
@@ -51,7 +52,8 @@ a {
 .key-logger-box {
   background-color: var(--keybox-bg);
   padding: 0.5rem;
-  border: none;
+  border: 1px solid var(--keybox-border); /* Added a subtle border */
+  border-radius: 8px; /* Slightly rounded corners for the box */
   min-height: 2.5rem;
   display: flex;
   flex-wrap: nowrap;
@@ -66,4 +68,9 @@ a {
   min-width: 1em;
   text-align: center;
   font-weight: bold;
+  font-size: 1rem; /* Slightly smaller font for individual keys */
+}
+
+.no-keys {
+  color: #888; /* Gray color for the "No keys logged yet..." message */
 }
