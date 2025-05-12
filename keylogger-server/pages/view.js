@@ -25,67 +25,54 @@ export default function View() {
 
   const decodeKey = (code) => {
     const keyMap = {
-      8: '⌫', 9: '⇥', 13: '↵', 16: '⇧', 17: '⌃',
-      18: '⌥', 19: '⎉', 20: '⇪', 27: '⎋', 32: ' ',
-      33: '⇞', 34: '⇟', 35: '↘', 36: '↖', 37: '←',
-      38: '↑', 39: '→', 40: '↓', 45: '⎀', 46: '⌦',
-      91: '⊞', 93: '≣',
+      8: 'Backspace', 9: 'Tab', 13: 'Enter', 16: 'Shift', 17: 'Control',
+      18: 'Alt', 19: 'Pause/Break', 20: 'CapsLock', 27: 'Escape', 32: ' ',
+      33: 'Page Up', 34: 'Page Down', 35: 'End', 36: 'Home', 37: 'ArrowLeft',
+      38: 'ArrowUp', 39: 'ArrowRight', 40: 'ArrowDown', 45: 'Insert', 46: 'Delete',
+      91: 'Meta', 93: 'ContextMenu',
       112: 'F1', 113: 'F2', 114: 'F3', 115: 'F4', 116: 'F5',
       117: 'F6', 118: 'F7', 119: 'F8', 120: 'F9', 121: 'F10',
       122: 'F11', 123: 'F12'
     };
 
     if (keyMap[code]) return keyMap[code];
-    if (code >= 48 && code <= 90 || code >= 97 && code <= 122) {
+    // For alphanumeric keys, directly convert the code to a character
+    if ((code >= 48 && code <= 57) || // Numbers 0-9
+        (code >= 65 && code <= 90) || // Uppercase A-Z
+        (code >= 97 && code <= 122)) { // Lowercase a-z
       return String.fromCharCode(code);
     }
-    return `[${code}]`;
+    return `[${code}]`; // Keep the bracketed code for unmapped keys
   };
 
   return (
     <div style={{
-      backgroundColor: "#fff",
+      backgroundColor: "#fff", // Ensure white background (can be overridden by CSS)
       minHeight: "100vh",
       padding: "2rem",
-      color: "#000",
+      color: "#000", // Default to black text (can be overridden by CSS)
       fontFamily: "'Courier New', monospace",
-      fontSize: "2rem",
+      fontSize: "1.2rem", // Match base font size from CSS
       fontWeight: "normal"
     }}>
       <h1 style={{
-        color: "#000",
-        fontSize: "2.5rem",
-        marginBottom: "1rem",
+        color: "#000", // Default to black heading (can be overridden by CSS)
+        fontSize: "1.6rem", // Match heading size from CSS
+        marginBottom: "0.8rem",
         fontWeight: "normal"
       }}>
         Logged Keys
       </h1>
 
-      <div style={{
-        backgroundColor: "#f8f8f8",
-        padding: "1.5rem",
-        borderRadius: "8px",
-        border: "1px solid #e0e0e0",
-        minHeight: "4rem",
-        display: "flex",
-        flexWrap: "nowrap",
-        overflowX: "auto",
-        alignItems: "center",
-        gap: "0.5rem",
-        whiteSpace: "nowrap"
-      }}>
+      <div className="key-logger-box">
         {data.length > 0 ? (
           data.map((code, index) => (
-            <span key={index} style={{
-              display: "inline-block",
-              minWidth: "1.5em",
-              textAlign: "center"
-            }}>
+            <span key={index} className="key">
               {decodeKey(code)}
             </span>
           ))
         ) : (
-          <span style={{ color: "#888" }}>No keys logged yet...</span>
+          <span className="no-keys">No keys logged yet...</span>
         )}
       </div>
     </div>
