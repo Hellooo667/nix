@@ -1,3 +1,4 @@
+// pages/view.js
 import { useEffect, useState } from 'react';
 
 export default function View() {
@@ -19,9 +20,9 @@ export default function View() {
       }
     };
 
-    fetchKeys(); // initial fetch
-    const interval = setInterval(fetchKeys, 1000); // every second
-    return () => clearInterval(interval); // cleanup
+    fetchKeys();
+    const interval = setInterval(fetchKeys, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
