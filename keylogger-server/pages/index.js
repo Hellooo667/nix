@@ -26,13 +26,14 @@ export default function Home() {
       padding: "2rem",
       fontFamily: "monospace"
     }}>
+      <b>
       <h1>Live Key Logs</h1>
       <ul>
         {keys.map((k, i) => (
           <li key={i}>Keycode: {k}</li>
         ))}
       </ul>
-    </div>
+        </b></div>
   );
 }
 
