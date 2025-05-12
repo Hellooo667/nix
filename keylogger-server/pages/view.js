@@ -24,11 +24,11 @@ export default function View() {
   }, []);
 
   const decodeKey = (code) => {
-    try {
-      return String.fromCharCode(code);
-    } catch {
-      return '?';
-    }
+    if (code === 13) return "[Enter]";
+    if (code === 32) return " ";
+    if (code === 8) return "[Backspace]";
+    if (code < 32 || code > 126) return `[${code}]`;
+    return String.fromCharCode(code);
   };
 
   return (
@@ -42,7 +42,9 @@ export default function View() {
     }}>
       <h1>Logged Keys</h1>
       <div>
-        {data.map((code, index) => decodeKey(code)).join('')}
+        {data.map((code, index) => (
+          <span key={index}>{decodeKey(code)}</span>
+        ))}
       </div>
     </div>
   );
