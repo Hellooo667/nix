@@ -25,55 +25,41 @@ export default function View() {
 
   const decodeKey = (code) => {
     const keyMap = {
-      8: 'Backspace', 9: 'Tab', 13: 'Enter', 16: 'Shift', 17: 'Control',
-      18: 'Alt', 19: 'Pause/Break', 20: 'CapsLock', 27: 'Escape', 32: ' ',
-      33: 'Page Up', 34: 'Page Down', 35: 'End', 36: 'Home', 37: 'ArrowLeft',
-      38: 'ArrowUp', 39: 'ArrowRight', 40: 'ArrowDown', 45: 'Insert', 46: 'Delete',
-      91: 'Meta', 93: 'ContextMenu',
-      112: 'F1', 113: 'F2', 114: 'F3', 115: 'F4', 116: 'F5',
-      117: 'F6', 118: 'F7', 119: 'F8', 120: 'F9', 121: 'F10',
-      122: 'F11', 123: 'F12'
+      8: 'Backspace', 9: 'Tab', 13: 'Enter', 27: 'Esc', 32: ' ',
+      37: '←', 38: '↑', 39: '→', 40: '↓',
+      91: 'Meta', 93: 'Menu'
     };
 
-    if (keyMap[code]) return keyMap[code];
-    // For alphanumeric keys, directly convert the code to a character
-    if ((code >= 48 && code <= 57) || // Numbers 0-9
-        (code >= 65 && code <= 90) || // Uppercase A-Z
-        (code >= 97 && code <= 122)) { // Lowercase a-z
-      return String.fromCharCode(code);
-    }
-    return `[${code}]`; // Keep the bracketed code for unmapped keys
+    // Custom number mapping
+    if (code >= 2 && code <= 10) return String(code - 1);
+    if (code === 11) return '0';
+
+    // Top row letters: q=16 to p=25
+    if (code >= 16 && code <= 25) return String.fromCharCode(81 + (code - 16));
+
+    // Home row: a=30 to l=38
+    if (code >= 30 && code <= 38) return String.fromCharCode(65 + (code - 30));
+
+    // Bottom row: z=44 to m=50
+    if (code >= 44 && code <= 50) return String.fromCharCode(90 + (code - 44));
+
+    return keyMap[code] || `[${code}]`;
   };
 
   return (
     <div style={{
-      backgroundColor: "#fff", // Ensure white background (can be overridden by CSS)
+      backgroundColor: "#fff",
       minHeight: "100vh",
       padding: "2rem",
-      color: "#000", // Default to black text (can be overridden by CSS)
-      fontFamily: "'Courier New', monospace",
-      fontSize: "1.2rem", // Match base font size from CSS
-      fontWeight: "normal"
+      color: "#111",
+      fontFamily: "monospace",
+      fontSize: "1.5rem"
     }}>
-      <h1 style={{
-        color: "#000", // Default to black heading (can be overridden by CSS)
-        fontSize: "1.6rem", // Match heading size from CSS
-        marginBottom: "0.8rem",
-        fontWeight: "normal"
-      }}>
-        Logged Keys
-      </h1>
-
-      <div className="key-logger-box">
-        {data.length > 0 ? (
-          data.map((code, index) => (
-            <span key={index} className="key">
-              {decodeKey(code)}
-            </span>
-          ))
-        ) : (
-          <span className="no-keys">No keys logged yet...</span>
-        )}
+      <h1>Logged Keys</h1>
+      <div style={{ wordWrap: "break-word", whiteSpace: "normal" }}>
+        {data.map((code, index) => (
+          <span key={index}>{decodeKey(code)}</span>
+        ))}
       </div>
     </div>
   );
