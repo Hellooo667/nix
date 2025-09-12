@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Gemini Sidebar
+Exec=python3 /home/hari/nix/sidebar/main.py
+Icon=/home/hari/nix/sidebar/icon.svg
+StartupNotify=false
+Terminal=false
+X-GNOME-Autostart-enabled=true
